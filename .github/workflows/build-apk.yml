@@ -1,4 +1,4 @@
-name: Build SAPA APK
+ name: Build SAPA APK
 
 on:
   push:
@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build web app
+        run: npm run build
+
       - name: Sync Capacitor Android
         run: npx cap sync android
 
@@ -42,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SAPA-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk       
