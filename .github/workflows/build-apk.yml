@@ -24,13 +24,18 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 21
+          java-version: '21'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build web
         run: npm run build
+
+      - name: Verify web assets
+        run: |
+          test -f dist/index.html
+          echo "dist/index.html OK"
 
       - name: Sync Capacitor
         run: npx cap sync android
@@ -39,7 +44,7 @@ jobs:
         working-directory: android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
